@@ -1,0 +1,5 @@
+/**app.wxss**/
+@import "/style/main.wxss";
+view {
+    box-sizing: border-box;
+}
