@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<wxs src="../../utils/tools.wxs" module="tools"/>
+<cu-custom bgColor="bg-white">
+  <view slot="content"> </view>
+</cu-custom>
+<view class="container">
+    <view class="logo">
+        <image src="/asset/imgs/logo.png" mode="aspectFit"/>
+    </view>
+    <view class="nav-list">
+        <view bind:tap="nav" data-index="{{index}}" class="nav-item" wx:for="{{navList}}" wx:key>
+            <image class="nav-icon" src="{{item.icon}}" mode="aspectFill"/>
+            <view class="nav-title">
+                {{item.title}}
+            </view>
+        </view>
+
+    </view>
+    <view class="today-course">
+        <view class="course-option">
+            <view class="option-title">今日课表</view>
+            <view class="option-time">第{{todayWeeks}}周 周{{tools.getWeekText(todayWeek)}}</view>
+        </view>
+        <view class="course-box">
+        <block wx:if="{{todayCourseList.length == 0}}">
+            <image class="empty-img" src="/asset/imgs/empty.png" mode=""/>
+            <view class="empty-title">今天没有课哦，快去充实一下自己吧！</view>
+        </block>
+        <block wx:else="">
+            <view class="course-item" wx:for="{{todayCourseList}}" wx:key="num">
+                <view class="coursr-name">{{item.name}}</view>
+                <view class="coursr-address">{{item.address ? item.address : '未知'}}</view>
+
+            </view>
+        </block>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,57 @@
+<!--pages/course/index.wxml-->
+<wxs src="../../utils/tools.wxs" module="tools"/>
+<cu-custom bgColor="bg-white" customBack="{{true}}" bind:back="update">
+    <view slot="backText">
+        <image bind:tap="update" class="refresh-btn" src="/asset/imgs/refresh.png" mode="aspectFit"/>
+    </view>
+  <view slot="content" bind:tap="selectWeek"><text>第{{nowWeek}}周</text><text class="cuIcon-unfold"></text></view>
+</cu-custom>
+
+<view class="container">
+    <view class="week-list">
+        <view class="now-month">
+            <text>{{nowMonth < 10 ? '0' + nowMonth : nowMonth}}</text>
+            <text>月</text>
+        </view>
+        <view class="week-item {{nowMonth ==  todayMonth && todayDay == weekCalendars[index] ? 'active' : ''}}" wx:for="{{weekDayCount}}" wx:key >
+            <text class="week-name">周{{weekIndexText[index]}}</text>
+            <text class="week-date">{{weekCalendars[index] == 1 ? ((nowMonth == 12 ? 1 : (nowMonth)) + '月') : (weekCalendars[index] < 9 ? '0' : '') + weekCalendars[index] + '日'}}</text>
+        </view>
+    </view>
+    <view class="course-content">
+        <view class="course-nums">
+            <view class="course-num" wx:for="{{12}}" wx:key>
+                {{index + 1 > 9 ? index + 1 :'0' + (index + 1)}}
+            </view>
+        </view>
+        <swiper duration="{{firstEntry ? 0 : 500}}" circular class="course-swpier" current="{{nowWeek - 1}}" bindchange="swiperSwitchWeek">
+            <swiper-item wx:for="{{totalWeek}}" wx:key="index" wx:for-index="weekIndex">
+                <view class="course-list">
+                <view wx:if="{{tools.indexOf(item.weeks,weekIndex+1)}}" bindtap="navCourseDetail" data-index="{{index}}" class="course-item" wx:for="{{courseList}}" wx:key="key" style="top: {{(item.section - 1) * 120}}rpx;left:{{(item.week - 1) * ((windowWidth * 2 - 50) / 7)}}rpx;height:{{item.sectionCount * 120}}rpx;">
+                    <view class="course-item__content" style="background-color: {{courseColor[item.name]}};">
+                    {{item.name}}@{{item.address ? item.address : '未知'}}
+                    </view>
+                </view>
+                </view>
+            </swiper-item>
+        </swiper>
+        
+    </view>
+</view>
+<van-popup show="{{ showSwithWeek }}" position="bottom" round bind:close="hideSwitchWeek">
+    <view class="switch-week__popup">
+        <view class="switch-week__title">切换周数</view>
+            <view class="switch-week__list">
+                <view class="switch-week__item" wx:for="{{totalWeek}}" wx:key>
+                    <view bind:tap="switchWeek" data-week="{{item + 1}}" class="switch-week__item-box {{nowWeek == index + 1 ? 'active' : ''}}">
+                        {{item + 1}}
+                    </view>
+                    
+                </view>
+            </view>
+        
+    </view>
+</van-popup>
+
+
+

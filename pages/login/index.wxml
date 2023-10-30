@@ -1,0 +1,21 @@
+<!--pages/login/index.wxml-->
+<view class="container">
+    <view class="header">
+        <image src="/asset/imgs/logo.png" model="aspectFill" alt=""/>
+    </view>
+    <view class="login">
+        <view class="form-item">
+            <image src="/asset/imgs/user.png" model="aspectFill" alt=""/>
+            <input type="text" model:value="{{stuId}}" placeholder="请输入学号"/>
+        </view>
+        <view class="form-item">
+            <image src="/asset/imgs/password.png" model="aspectFill" alt=""/>
+            <input type="password" model:value="{{password}}" placeholder="请输入密码"/>
+        </view>
+    </view>
+    <view bind:tap="swichStatus" class="checkbox-item">
+        <checkbox checked="{{saveCount}}" class="theme" value=""/>
+        <view class="margin-left-sm">记住账号密码（仅本地存储）</view>
+    </view>
+    <button bind:tap="login" class="button">登陆</button>
+</view>
